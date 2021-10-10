@@ -19,7 +19,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final Map<String, dynamic> _fonts = {
-    "Roboto": "systemDefault",
+    "Roboto": null,
     "Montserrat": "Montserrat",
     "Poppins": "Poppins",
     "Josefin Sans": "Josefin Sans",

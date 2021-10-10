@@ -17,9 +17,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _index = 0;
 
-  void _onItemTap(int index) => setState(() {
-        _index = index;
-      });
+  void _onItemTap(int index) {
+    setState(() {
+      _index = index;
+    });
+    _toggle();
+  }
 
   Widget get _page {
     return _drawerItems[_index]["p"] ?? const Text("Fragment not available");
