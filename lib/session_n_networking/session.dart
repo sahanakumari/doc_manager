@@ -4,13 +4,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 const _THEME_MODE = 1;
 
 /*Color code int value (decimal)*/
-const _COLOR_SCHEME = 0xffb43757;
+const _COLOR_SCHEME = 0xfffab206;
 
 /*Card corner radius*/
-const _CORNER_RADIUS = 0.0;
+const _CORNER_RADIUS = 5.0;
 
-/*Supported fonts [Arquiecta, Josefin Sans, Montserrat, Poppins, Sweet Sans, null=> System default]*/
-const _FONT_NAME = "Sweet Sans";
+/*Supported fonts [Josefin Sans, Montserrat, Poppins, null=> System default]*/
+const _FONT_NAME = "Poppins";
 
 /*Supported font scale factors [0.8=> Tiny, 0.9=> Small, 1.0=> Normal, 1.1=> Large, 1.2=> Huge]*/
 const _FONT_SIZE = 1.0;

@@ -16,16 +16,18 @@ const MaterialColor kSwatch = MaterialColor(0xff202023, {
   900: Color(0xff131315),
 });
 
-const Color kPrimaryColor = Colors.indigo;
-const Color kAccentColor = Color(0xFF8cba37);
+const Color kPrimaryColor = Color(0xff015ecb);
+const Color kAccentColor = Color(0xfffab206);
+const Color kButtonColor = Color(0xff1BB792);
 const Color kHintColor = Color(0xffdedede);
 const Color kDividerColor = Color(0xffbcbcbc);
 const Color kErrorColor = Color(0xffcd0909);
 Color kBackgroundColor = Colors.white.withOpacity(0.75);
 
 //Dark theme
-const Color kPrimaryColorDark = Color(0xff2649b6);
-const Color kAccentColorDark = Color(0xFF8cba37);
+const Color kPrimaryColorDark = Color(0xff2f579f);
+const Color kAccentColorDark = Color(0xfffab206);
+const Color kButtonColorDark = Color(0xff1BB792);
 const Color kHintColorDark = Color(0xffdedede);
 const Color kDividerColorDark = Color(0xffbcbcbc);
 const Color kErrorColorDark = Color(0xffcd0909);
@@ -263,6 +265,21 @@ class AppTheme {
             borderRadius: BorderRadius.circular(kRadius),
           ),
           height: 36,
+          colorScheme: ColorScheme(
+            primary: kButtonColor,
+            primaryVariant: kButtonColorDark,
+            secondary: Colors.white,
+            secondaryVariant: Colors.white,
+            surface: kButtonColor,
+            background: kButtonColor,
+            error: kErrorColor,
+            onPrimary: Colors.white,
+            onSecondary: Colors.white,
+            onSurface: Colors.white,
+            onBackground: Colors.white,
+            onError: Colors.white,
+            brightness: Brightness.dark,
+          ),
           buttonColor: Color(settings.color),
         ),
         popupMenuTheme: PopupMenuThemeData(
@@ -332,6 +349,21 @@ class AppTheme {
             borderRadius: BorderRadius.circular(kRadius),
           ),
           height: 36,
+          colorScheme: ColorScheme(
+            primary: kButtonColor,
+            primaryVariant: kButtonColorDark,
+            secondary: Colors.white,
+            secondaryVariant: Colors.white,
+            surface: kButtonColor,
+            background: kButtonColor,
+            error: kErrorColor,
+            onPrimary: Colors.white,
+            onSecondary: Colors.white,
+            onSurface: Colors.white,
+            onBackground: Colors.white,
+            onError: Colors.white,
+            brightness: Brightness.dark,
+          ),
           buttonColor: Color(settings.color),
         ),
         popupMenuTheme: PopupMenuThemeData(
@@ -370,7 +402,7 @@ class AppTheme {
           secondaryLabelStyle: _textThemeDark.button!,
           brightness: Brightness.dark,
         ),
-        dividerColor: const Color(0x33ffffff),
+        dividerColor: kDividerColorDark,
         iconTheme: const IconThemeData(color: Colors.white),
         fontFamily: settings.fontName,
       );

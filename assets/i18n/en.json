@@ -1,2 +1,16 @@
 {
+  "//": "Login",
+  "getStarted": "Get Started!",
+  "enterMobile": "Enter your mobile number",
+  "mobileNumber": "Mobile number",
+  "enterMobileDesc": "We will send you an SMS with the verification code to this number",
+  "sendOtp": "Send OTP",
+  "login": "Login",
+  "//": "OTP",
+  "enterVerificationCode": "Enter verification code",
+  "enterVerificationCodeDesc": "Please enter the verification code that was sent to {mobile}",
+  "iAgreeToThe": "I agree to the ",
+  "termsOfUse": "Terms of Use",
+  "and": " and ",
+  "privacyPolicy": "Privacy Policy"
 }

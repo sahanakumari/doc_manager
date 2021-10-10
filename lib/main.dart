@@ -51,7 +51,6 @@ class LandingScreen extends StatelessWidget {
           supportedLocales: const [
             Locale('en', 'US'),
             Locale('hi', 'IN'),
-            Locale('ne', 'NP'),
           ],
           locale: settings.locale,
           localizationsDelegates: const [
