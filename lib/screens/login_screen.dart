@@ -113,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   "enterMobileDesc".tr(context),
                   textScaleFactor: 1.1,

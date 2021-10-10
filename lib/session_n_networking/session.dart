@@ -67,5 +67,5 @@ class Session {
     _pref.setString("app_Language", value!);
   }
 
-  static get isLoggedIn => _pref.getBool("isLoggedIn") ?? false;
+  static get isLoggedIn => _pref.getBool("isLoggedIn") ?? true;
 }

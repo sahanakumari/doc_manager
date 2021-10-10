@@ -86,10 +86,10 @@ class ScaleDialogRoute<T> extends PageRoute<T> {
   String get barrierLabel => "";
 }
 
-class ScaleRotateRoute extends PageRouteBuilder {
+class ScaleRoute extends PageRouteBuilder {
   final Widget page;
 
-  ScaleRotateRoute(this.page)
+  ScaleRoute(this.page)
       : super(
           pageBuilder: (
             BuildContext context,
@@ -106,7 +106,7 @@ class ScaleRotateRoute extends PageRouteBuilder {
           ) =>
               ScaleTransition(
             scale: Tween<double>(
-              begin: 0.0,
+              begin: 0.5,
               end: 1.0,
             ).animate(
               CurvedAnimation(
@@ -114,18 +114,7 @@ class ScaleRotateRoute extends PageRouteBuilder {
                 curve: Curves.fastOutSlowIn,
               ),
             ),
-            child: RotationTransition(
-              turns: Tween<double>(
-                begin: 0.75,
-                end: 1.0,
-              ).animate(
-                CurvedAnimation(
-                  parent: animation,
-                  curve: Curves.linear,
-                ),
-              ),
-              child: child,
-            ),
+            child: child,
           ),
         );
 }

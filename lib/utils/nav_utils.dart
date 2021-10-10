@@ -11,5 +11,5 @@ class NavUtils {
       Navigator.push(context, EnterExitRoute(from, to));
 
   static Future scaleTo(BuildContext context, Widget page) =>
-      Navigator.push(context, ScaleDialogRoute(builder: (_) => page));
+      Navigator.push(context, ScaleRoute(page));
 }

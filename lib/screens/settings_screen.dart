@@ -3,14 +3,15 @@ import 'dart:math';
 import 'package:doc_manager/providers/app_settings.dart';
 import 'package:doc_manager/utils/app_styles.dart';
 import 'package:doc_manager/utils/extensions.dart';
-import 'package:doc_manager/widgets/s_card.dart';
 import 'package:doc_manager/widgets/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:remixicon/remixicon.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  final VoidCallback? onBackTap;
+
+  const SettingsScreen({Key? key, this.onBackTap}) : super(key: key);
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -37,7 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   };
 
   final Map<int, String> _colors = {
-    0xff74bf2e: "Pear",
+    kAccentColor.value: "appDefault",
     0xff03c04a: "Parakeet",
     0xff028a0f: "Emerald",
     0xffb43757: "Hibiscus",
@@ -88,373 +89,359 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (BuildContext context, AppSettings settings, Widget? child) {
         _settings = settings;
         return Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(Remix.arrow_left_s_line),
-            ),
-          ),
           body: SingleChildScrollView(
             padding: EdgeInsets.only(bottom: 200),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SectionTitle("displayNBrightness".tr(context)),
-                SCard(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: Column(
-                    children: [
-                      SettingItem(
-                        title: "theme",
-                        icon: Theme.of(context).brightness == Brightness.light
-                            ? Remix.sun_fill
-                            : Remix.moon_fill,
-                        onToggle: () {
-                          if (settings.expandedIndex == 0) {
-                            settings.expandedIndex = null;
-                          } else {
-                            settings.expandedIndex = 0;
-                          }
-                        },
-                        isExpanded: settings.expandedIndex == 0,
-                        subtitle:
-                            _themes[settings.themeMode] ?? "systemDefault",
-                        items: _themes.keys
-                            .map((e) => Padding(
-                                  padding: const EdgeInsets.only(right: 10),
+                Column(
+                  children: [
+                    SettingItem(
+                      title: "theme",
+                      icon: Theme.of(context).brightness == Brightness.light
+                          ? Remix.sun_fill
+                          : Remix.moon_fill,
+                      onToggle: () {
+                        if (settings.expandedIndex == 0) {
+                          settings.expandedIndex = null;
+                        } else {
+                          settings.expandedIndex = 0;
+                        }
+                      },
+                      isExpanded: settings.expandedIndex == 0,
+                      subtitle: _themes[settings.themeMode] ?? "systemDefault",
+                      items: _themes.keys
+                          .map((e) => Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: ChoiceChip(
+                                  label: Text((_themes[e] ?? "systemDefault")
+                                      .tr(context)),
+                                  labelStyle: _getStyle(
+                                      context, settings.themeMode == e),
+                                  selected: settings.themeMode == e,
+                                  onSelected: (selected) {
+                                    settings.themeMode = e;
+                                    settings.expandedIndex = null;
+                                  },
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                    Divider(height: 1, indent: 72),
+                    SettingItem(
+                      title: "colorScheme",
+                      icon: Remix.palette_fill,
+                      items: _colors.keys
+                          .map((e) => Padding(
+                                padding: const EdgeInsets.only(
+                                    right: 10, bottom: 10),
+                                child: SizedBox(
+                                  width: 32,
+                                  height: 32,
                                   child: ChoiceChip(
-                                    label: Text((_themes[e] ?? "systemDefault")
-                                        .tr(context)),
-                                    labelStyle: _getStyle(
-                                        context, settings.themeMode == e),
-                                    selected: settings.themeMode == e,
-                                    onSelected: (selected) {
-                                      settings.themeMode = e;
-                                      settings.expandedIndex = null;
-                                    },
-                                  ),
-                                ))
-                            .toList(),
-                      ),
-                      Divider(height: 1, indent: 72),
-                      SettingItem(
-                        title: "colorScheme",
-                        icon: Remix.palette_fill,
-                        items: _colors.keys
-                            .map((e) => Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 10, bottom: 10),
-                                  child: SizedBox(
-                                    width: 32,
-                                    height: 32,
-                                    child: ChoiceChip(
-                                      label: Tooltip(
-                                        message: _colors[e]?.tr(context) ?? "",
-                                        child: Container(
-                                          width: 32,
-                                          height: 32,
-                                          child: settings.color == e
-                                              ? const Icon(
-                                                  Remix.check_fill,
-                                                  size: 16,
-                                                  color: Colors.white,
-                                                )
-                                              : null,
-                                          decoration: BoxDecoration(
-                                            color: Color(e),
-                                            borderRadius: BorderRadius.circular(
-                                              AppTheme.kRadius,
-                                            ),
+                                    label: Tooltip(
+                                      message: _colors[e]?.tr(context) ?? "",
+                                      child: Container(
+                                        width: 32,
+                                        height: 32,
+                                        child: settings.color == e
+                                            ? const Icon(
+                                                Remix.check_fill,
+                                                size: 16,
+                                                color: Colors.white,
+                                              )
+                                            : null,
+                                        decoration: BoxDecoration(
+                                          color: Color(e),
+                                          borderRadius: BorderRadius.circular(
+                                            AppTheme.kRadius,
                                           ),
                                         ),
                                       ),
-                                      labelStyle: _getStyle(
-                                          context, settings.color == e),
-                                      // label: Text((_colors[e] ?? "appDefault")
-                                      //     .tr(context)),
-                                      labelPadding: EdgeInsets.zero,
-                                      padding: EdgeInsets.zero,
-                                      selected: settings.color == e,
-                                      onSelected: (selected) {
-                                        settings.color = e;
-                                        settings.expandedIndex = null;
-                                      },
                                     ),
-                                  ),
-                                ))
-                            .toList(),
-                        onToggle: () {
-                          if (settings.expandedIndex == 1) {
-                            settings.expandedIndex = null;
-                          } else {
-                            settings.expandedIndex = 1;
-                          }
-                        },
-                        isExpanded: settings.expandedIndex == 1,
-                        subtitle: _colors[settings.color] ?? "systemDefault",
-                      ),
-                      Divider(height: 1, indent: 72),
-                      SettingItem(
-                        title: "cardDesign",
-                        icon: Remix.shape_2_fill,
-                        items: _cornerRadius.keys
-                            .map((e) => Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: ChoiceChip(
-                                    labelStyle: _getStyle(
-                                        context, settings.cornerRadius == e),
-                                    label: Text((_cornerRadius[e] ?? "flat")
-                                        .tr(context)),
-                                    selected: settings.cornerRadius == e,
+                                    labelStyle:
+                                        _getStyle(context, settings.color == e),
+                                    // label: Text((_colors[e] ?? "appDefault")
+                                    //     .tr(context)),
+                                    labelPadding: EdgeInsets.zero,
+                                    padding: EdgeInsets.zero,
+                                    selected: settings.color == e,
                                     onSelected: (selected) {
-                                      settings.cornerRadius = e;
+                                      settings.color = e;
                                       settings.expandedIndex = null;
                                     },
                                   ),
-                                ))
-                            .toList(),
-                        onToggle: () {
-                          if (settings.expandedIndex == 5) {
-                            settings.expandedIndex = null;
-                          } else {
-                            settings.expandedIndex = 5;
-                          }
-                        },
-                        isExpanded: settings.expandedIndex == 5,
-                        subtitle:
-                            _cornerRadius[settings.cornerRadius] ?? "flat",
-                      ),
-                      Divider(height: 1, indent: 72),
-                      SettingItem(
-                        icon: Remix.text,
-                        title: "font",
-                        items: _fonts.keys
-                            .map((e) => Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: ChoiceChip(
-                                    labelStyle: _getStyle(
-                                        context, settings.fontName == e),
-                                    label: Text(
-                                      _fonts[e] ?? "systemDefault".tr(context),
-                                      style: _getStyle(
-                                              context, settings.fontName == e)
-                                          .copyWith(
-                                        fontFamily: e,
-                                      ),
+                                ),
+                              ))
+                          .toList(),
+                      onToggle: () {
+                        if (settings.expandedIndex == 1) {
+                          settings.expandedIndex = null;
+                        } else {
+                          settings.expandedIndex = 1;
+                        }
+                      },
+                      isExpanded: settings.expandedIndex == 1,
+                      subtitle: _colors[settings.color] ?? "appDefault",
+                    ),
+                    Divider(height: 1, indent: 72),
+                    SettingItem(
+                      title: "cardDesign",
+                      icon: Remix.shape_2_fill,
+                      items: _cornerRadius.keys
+                          .map((e) => Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: ChoiceChip(
+                                  labelStyle: _getStyle(
+                                      context, settings.cornerRadius == e),
+                                  label: Text(
+                                      (_cornerRadius[e] ?? "flat").tr(context)),
+                                  selected: settings.cornerRadius == e,
+                                  onSelected: (selected) {
+                                    settings.cornerRadius = e;
+                                    settings.expandedIndex = null;
+                                  },
+                                ),
+                              ))
+                          .toList(),
+                      onToggle: () {
+                        if (settings.expandedIndex == 5) {
+                          settings.expandedIndex = null;
+                        } else {
+                          settings.expandedIndex = 5;
+                        }
+                      },
+                      isExpanded: settings.expandedIndex == 5,
+                      subtitle: _cornerRadius[settings.cornerRadius] ?? "flat",
+                    ),
+                    Divider(height: 1, indent: 72),
+                    SettingItem(
+                      icon: Remix.text,
+                      title: "font",
+                      items: _fonts.keys
+                          .map((e) => Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: ChoiceChip(
+                                  labelStyle: _getStyle(
+                                      context, settings.fontName == e),
+                                  label: Text(
+                                    _fonts[e] ?? "systemDefault".tr(context),
+                                    style: _getStyle(
+                                            context, settings.fontName == e)
+                                        .copyWith(
+                                      fontFamily: e,
                                     ),
-                                    selected: settings.fontName == e,
-                                    onSelected: (selected) {
-                                      settings.fontName = e;
-                                      settings.expandedIndex = null;
-                                    },
                                   ),
-                                ))
-                            .toList(),
-                        onToggle: () {
-                          if (settings.expandedIndex == 2) {
-                            settings.expandedIndex = null;
-                          } else {
-                            settings.expandedIndex = 2;
-                          }
-                        },
-                        isExpanded: settings.expandedIndex == 2,
-                        subtitle: settings.fontName == "Roboto"
-                            ? "systemDefault".tr(context)
-                            : settings.fontName,
-                      ),
-                      Divider(height: 1, indent: 72),
-                      SettingItem(
-                        title: "fontSize",
-                        icon: Remix.font_size,
-                        child: Column(
-                          children: [
-                            SliderTheme(
-                              data: SliderThemeData(
-                                trackHeight: 1,
-                                trackShape: RectangularSliderTrackShape(),
-                                valueIndicatorShape:
-                                    PaddleSliderValueIndicatorShape(),
-                                showValueIndicator: ShowValueIndicator.always,
-                                valueIndicatorColor:
-                                    Theme.of(context).iconTheme.color,
-                                valueIndicatorTextStyle: Theme.of(context)
-                                    .textTheme
-                                    .button!
-                                    .copyWith(
-                                        color: Theme.of(context).canvasColor),
-                                activeTickMarkColor:
-                                    Theme.of(context).iconTheme.color,
-                                inactiveTickMarkColor:
-                                    Theme.of(context).iconTheme.color,
-                                activeTrackColor:
-                                    Theme.of(context).dividerColor,
-                                inactiveTrackColor:
-                                    Theme.of(context).dividerColor,
-                                thumbShape: const RoundSliderThumbShape(
-                                    enabledThumbRadius: 8),
-                                thumbColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                tickMarkShape:
-                                    RoundSliderTickMarkShape(tickMarkRadius: 2),
+                                  selected: settings.fontName == e,
+                                  onSelected: (selected) {
+                                    settings.fontName = e;
+                                    settings.expandedIndex = null;
+                                  },
+                                ),
+                              ))
+                          .toList(),
+                      onToggle: () {
+                        if (settings.expandedIndex == 2) {
+                          settings.expandedIndex = null;
+                        } else {
+                          settings.expandedIndex = 2;
+                        }
+                      },
+                      isExpanded: settings.expandedIndex == 2,
+                      subtitle: settings.fontName == "Roboto"
+                          ? "systemDefault".tr(context)
+                          : settings.fontName,
+                    ),
+                    Divider(height: 1, indent: 72),
+                    SettingItem(
+                      title: "fontSize",
+                      icon: Remix.font_size,
+                      child: Column(
+                        children: [
+                          SliderTheme(
+                            data: SliderThemeData(
+                              trackHeight: 1,
+                              trackShape: RectangularSliderTrackShape(),
+                              valueIndicatorShape:
+                                  PaddleSliderValueIndicatorShape(),
+                              showValueIndicator: ShowValueIndicator.always,
+                              valueIndicatorColor:
+                                  Theme.of(context).iconTheme.color,
+                              valueIndicatorTextStyle: Theme.of(context)
+                                  .textTheme
+                                  .button!
+                                  .copyWith(
+                                      color: Theme.of(context).canvasColor),
+                              activeTickMarkColor:
+                                  Theme.of(context).iconTheme.color,
+                              inactiveTickMarkColor:
+                                  Theme.of(context).iconTheme.color,
+                              activeTrackColor: Theme.of(context).dividerColor,
+                              inactiveTrackColor:
+                                  Theme.of(context).dividerColor,
+                              thumbShape: const RoundSliderThumbShape(
+                                  enabledThumbRadius: 8),
+                              thumbColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              tickMarkShape:
+                                  RoundSliderTickMarkShape(tickMarkRadius: 2),
+                            ),
+                            child: Slider(
+                              min: 0.8,
+                              max: 1.2,
+                              divisions: 4,
+                              value: _fontSize,
+                              label: _sizes[_fontSize]!.tr(context),
+                              onChanged: (v) {
+                                setState(() {
+                                  _fontSize = v;
+                                });
+                              },
+                              onChangeEnd: (v) {
+                                settings.textScale = v;
+                              },
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Transform.translate(
+                                  offset: const Offset(7.5, -5),
+                                  child: Transform.rotate(
+                                    angle: (pi / 180) * 30,
+                                    child: Text(
+                                      "verySmall".tr(context),
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontSize: 8),
+                                    ),
+                                  ),
+                                ),
                               ),
-                              child: Slider(
-                                min: 0.8,
-                                max: 1.2,
-                                divisions: 4,
-                                value: _fontSize,
-                                label: _sizes[_fontSize]!.tr(context),
-                                onChanged: (v) {
-                                  setState(() {
-                                    _fontSize = v;
-                                  });
-                                },
-                                onChangeEnd: (v) {
-                                  settings.textScale = v;
-                                },
+                              Expanded(
+                                child: Transform.translate(
+                                  offset: const Offset(7.5, -5),
+                                  child: Transform.rotate(
+                                    angle: (pi / 180) * 30,
+                                    child: Text(
+                                      "small".tr(context),
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Transform.translate(
-                                    offset: const Offset(7.5, -5),
-                                    child: Transform.rotate(
-                                      angle: (pi / 180) * 30,
-                                      child: Text(
-                                        "verySmall".tr(context),
-                                        style: TextStyle(fontSize: 8),
-                                      ),
+                              Expanded(
+                                child: Transform.translate(
+                                  offset: const Offset(7.5, -5),
+                                  child: Transform.rotate(
+                                    angle: (pi / 180) * 30,
+                                    child: Text(
+                                      "normal".tr(context),
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(fontSize: 12),
                                     ),
                                   ),
                                 ),
-                                Expanded(
-                                  child: Transform.translate(
-                                    offset: const Offset(7.5, -5),
-                                    child: Transform.rotate(
-                                      angle: (pi / 180) * 30,
-                                      child: Text(
-                                        "small".tr(context),
-                                        style: TextStyle(fontSize: 10),
-                                      ),
+                              ),
+                              Expanded(
+                                child: Transform.translate(
+                                  offset: const Offset(15, -5),
+                                  child: Transform.rotate(
+                                    angle: (pi / 180) * 30,
+                                    child: Text(
+                                      "large".tr(context),
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontSize: 14),
                                     ),
                                   ),
                                 ),
-                                Expanded(
-                                  child: Transform.translate(
-                                    offset: const Offset(7.5, -5),
-                                    child: Transform.rotate(
-                                      angle: (pi / 180) * 30,
-                                      child: Text(
-                                        "normal".tr(context),
-                                        style: TextStyle(fontSize: 12),
-                                      ),
+                              ),
+                              Expanded(
+                                child: Transform.translate(
+                                  offset: const Offset(18, -5),
+                                  child: Transform.rotate(
+                                    angle: (pi / 180) * 30,
+                                    child: Text(
+                                      "veryLarge".tr(context),
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontSize: 16),
                                     ),
                                   ),
                                 ),
-                                Expanded(
-                                  child: Transform.translate(
-                                    offset: const Offset(15, -5),
-                                    child: Transform.rotate(
-                                      angle: (pi / 180) * 30,
-                                      child: Text(
-                                        "large".tr(context),
-                                        style: TextStyle(fontSize: 14),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Transform.translate(
-                                    offset: const Offset(18, -5),
-                                    child: Transform.rotate(
-                                      angle: (pi / 180) * 30,
-                                      child: Text(
-                                        "veryLarge".tr(context),
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                          ],
-                        ),
-                        items: _sizes.keys
-                            .map((e) => Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: ChoiceChip(
-                                    labelStyle: _getStyle(
-                                      context,
-                                      settings.textScale == e,
-                                    ),
-                                    label: Text(
-                                      (_sizes[e] ?? "normal").tr(context),
-                                      textScaleFactor: e,
-                                    ),
-                                    selected: settings.textScale == e,
-                                    onSelected: (selected) {
-                                      settings.textScale = e;
-                                      settings.expandedIndex = null;
-                                    },
-                                  ),
-                                ))
-                            .toList(),
-                        onToggle: () {
-                          if (settings.expandedIndex == 3) {
-                            settings.expandedIndex = null;
-                          } else {
-                            settings.expandedIndex = 3;
-                          }
-                        },
-                        isExpanded: settings.expandedIndex == 3,
-                        subtitle: _sizes[settings.textScale] ?? "normal",
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                      items: _sizes.keys
+                          .map((e) => Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: ChoiceChip(
+                                  labelStyle: _getStyle(
+                                    context,
+                                    settings.textScale == e,
+                                  ),
+                                  label: Text(
+                                    (_sizes[e] ?? "normal").tr(context),
+                                    textScaleFactor: e,
+                                  ),
+                                  selected: settings.textScale == e,
+                                  onSelected: (selected) {
+                                    settings.textScale = e;
+                                    settings.expandedIndex = null;
+                                  },
+                                ),
+                              ))
+                          .toList(),
+                      onToggle: () {
+                        if (settings.expandedIndex == 3) {
+                          settings.expandedIndex = null;
+                        } else {
+                          settings.expandedIndex = 3;
+                        }
+                      },
+                      isExpanded: settings.expandedIndex == 3,
+                      subtitle: _sizes[settings.textScale] ?? "normal",
+                    ),
+                  ],
                 ),
                 SizedBox(height: 10),
                 SectionTitle("languageNInput".tr(context)),
-                SCard(
-                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: SettingItem(
-                    title: "language",
-                    icon: Remix.translate_2,
-                    items: _languages.keys
-                        .map((e) => Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: ChoiceChip(
-                                labelStyle: _getStyle(
-                                  context,
-                                  settings.locale?.languageCode == e,
-                                ),
-                                label: Text((_languages[e] ?? "systemDefault")
-                                    .tr(context)),
-                                selected: settings.locale?.languageCode == e,
-                                onSelected: (selected) {
-                                  settings.locale =
-                                      e == null ? null : Locale(e);
-                                  settings.expandedIndex = null;
-                                },
+                SettingItem(
+                  title: "language",
+                  icon: Remix.translate_2,
+                  items: _languages.keys
+                      .map((e) => Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: ChoiceChip(
+                              labelStyle: _getStyle(
+                                context,
+                                settings.locale?.languageCode == e,
                               ),
-                            ))
-                        .toList(),
-                    onToggle: () {
-                      if (settings.expandedIndex == 4) {
-                        settings.expandedIndex = null;
-                      } else {
-                        settings.expandedIndex = 4;
-                      }
-                    },
-                    isExpanded: settings.expandedIndex == 4,
-                    subtitle: _languages[settings.locale?.languageCode] ??
-                        "systemDefault",
-                  ),
+                              label: Text((_languages[e] ?? "systemDefault")
+                                  .tr(context)),
+                              selected: settings.locale?.languageCode == e,
+                              onSelected: (selected) {
+                                settings.locale = e == null ? null : Locale(e);
+                                settings.expandedIndex = null;
+                              },
+                            ),
+                          ))
+                      .toList(),
+                  onToggle: () {
+                    if (settings.expandedIndex == 4) {
+                      settings.expandedIndex = null;
+                    } else {
+                      settings.expandedIndex = 4;
+                    }
+                  },
+                  isExpanded: settings.expandedIndex == 4,
+                  subtitle: _languages[settings.locale?.languageCode] ??
+                      "systemDefault",
                 ),
               ],
             ),
@@ -492,7 +479,10 @@ class SettingItem extends StatelessWidget {
         ListTile(
           title: Text(
             title.tr(context),
-            style: Theme.of(context).textTheme.headline6,
+            textScaleFactor: 1.1,
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  color: Theme.of(context).primaryColor,
+                ),
           ),
           visualDensity: VisualDensity.compact,
           onTap: onToggle,
@@ -504,7 +494,10 @@ class SettingItem extends StatelessWidget {
             onPressed: null,
             isExpanded: isExpanded,
           ),
-          subtitle: Text(subtitle.tr(context)),
+          subtitle: Text(
+            subtitle.tr(context),
+            style: Theme.of(context).textTheme.caption,
+          ),
         ),
         AnimatedCrossFade(
           firstChild: Container(),

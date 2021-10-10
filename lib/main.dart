@@ -1,4 +1,5 @@
 import 'package:doc_manager/providers/app_settings.dart';
+import 'package:doc_manager/providers/doc_provider.dart';
 import 'package:doc_manager/screens/home_screen.dart';
 import 'package:doc_manager/screens/login_screen.dart';
 import 'package:doc_manager/session_n_networking/session.dart';
@@ -22,6 +23,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider<AppSettings>(create: (_) => AppSettings()),
+        ChangeNotifierProvider<DocProvider>(create: (_) => DocProvider()),
       ],
       child: LandingScreen(initialRoute: _route),
     ),

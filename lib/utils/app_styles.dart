@@ -22,16 +22,16 @@ const Color kButtonColor = Color(0xff1BB792);
 const Color kHintColor = Color(0xffdedede);
 const Color kDividerColor = Color(0xffbcbcbc);
 const Color kErrorColor = Color(0xffcd0909);
-Color kBackgroundColor = Colors.white.withOpacity(0.75);
+Color kBackgroundColor = Colors.white;
 
 //Dark theme
 const Color kPrimaryColorDark = Color(0xff2f579f);
 const Color kAccentColorDark = Color(0xfffab206);
 const Color kButtonColorDark = Color(0xff1BB792);
 const Color kHintColorDark = Color(0xffdedede);
-const Color kDividerColorDark = Color(0xffbcbcbc);
+const Color kDividerColorDark = Color(0x55bcbcbc);
 const Color kErrorColorDark = Color(0xffcd0909);
-Color kBackgroundColorDark = kSwatch[800]!.withOpacity(0.75);
+Color kBackgroundColorDark = kSwatch[800]!;
 
 class AppTheme {
   final AppSettings settings;
@@ -265,7 +265,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(kRadius),
           ),
           height: 36,
-          colorScheme: ColorScheme(
+          colorScheme: const ColorScheme(
             primary: kButtonColor,
             primaryVariant: kButtonColorDark,
             secondary: Colors.white,
@@ -300,9 +300,10 @@ class AppTheme {
         inputDecorationTheme: _inputTheme,
         appBarTheme: AppBarTheme(
           elevation: 0.0,
-          titleTextStyle: _textTheme.headline6,
-          toolbarTextStyle: _textTheme.headline6,
-          foregroundColor: _textTheme.button!.color,
+          titleTextStyle: _textTheme.headline6?.copyWith(color: kPrimaryColor),
+          toolbarTextStyle:
+              _textTheme.headline6?.copyWith(color: kPrimaryColor),
+          foregroundColor: kPrimaryColor,
           color: Colors.transparent,
           systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarIconBrightness: Brightness.dark,
@@ -349,7 +350,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(kRadius),
           ),
           height: 36,
-          colorScheme: ColorScheme(
+          colorScheme: const ColorScheme(
             primary: kButtonColor,
             primaryVariant: kButtonColorDark,
             secondary: Colors.white,
@@ -372,9 +373,9 @@ class AppTheme {
           ),
         ),
         inputDecorationTheme: _inputThemeDark,
-        primaryColor: kPrimaryColor,
+        primaryColor: kPrimaryColorDark,
         canvasColor: kSwatch,
-        secondaryHeaderColor: kPrimaryColor,
+        secondaryHeaderColor: kPrimaryColorDark,
         cardColor: kSwatch,
         hintColor: Colors.white38,
         disabledColor: kSwatch[200],
@@ -384,8 +385,11 @@ class AppTheme {
         scaffoldBackgroundColor: kBackgroundColorDark,
         textTheme: _textThemeDark,
         appBarTheme: AppBarTheme(
-          titleTextStyle: _textThemeDark.headline6,
-          toolbarTextStyle: _textThemeDark.headline6,
+          titleTextStyle:
+              _textThemeDark.headline6?.copyWith(color: kPrimaryColor),
+          toolbarTextStyle:
+              _textThemeDark.headline6?.copyWith(color: kPrimaryColor),
+          foregroundColor: kPrimaryColor,
           elevation: 0.0,
           color: Colors.transparent,
         ),
@@ -394,7 +398,7 @@ class AppTheme {
           disabledColor: kSwatch,
           selectedColor: Color(settings.color),
           secondarySelectedColor: Color(settings.color),
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(kRadius),
           ),

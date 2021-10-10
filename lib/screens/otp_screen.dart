@@ -1,6 +1,9 @@
+import 'package:doc_manager/screens/home_screen.dart';
 import 'package:doc_manager/utils/app_styles.dart';
 import 'package:doc_manager/utils/extensions.dart';
+import 'package:doc_manager/utils/nav_utils.dart';
 import 'package:doc_manager/widgets/s_buttons.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pinput/pin_put/pin_put.dart';
@@ -115,40 +118,51 @@ class _OTPScreenState extends State<OTPScreen> {
                       .copyWith(color: Colors.white),
                 ),
                 SizedBox(height: 20),
-                CheckboxListTile(
-                  value: _agreedToTerms,
-                  onChanged: (bool? v) {
-                    setState(() {
-                      _agreedToTerms = v ?? false;
-                    });
-                  },
-                  contentPadding: EdgeInsets.zero,
-                  controlAffinity: ListTileControlAffinity.leading,
-                  title: RichText(
-                    text: TextSpan(
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2!
-                          .copyWith(color: Colors.white),
-                      children: [
-                        TextSpan(text: "iAgreeToThe".tr(context)),
-                        TextSpan(
-                          text: "termsOfUse".tr(context),
-                          style: linkTextStyle,
-                        ),
-                        TextSpan(text: "and".tr(context)),
-                        TextSpan(
-                          text: "privacyPolicy".tr(context),
-                          style: linkTextStyle,
-                        ),
-                      ],
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _agreedToTerms,
+                      onChanged: (bool? v) {
+                        setState(() {
+                          _agreedToTerms = v ?? false;
+                        });
+                      },
                     ),
-                  ),
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(color: Colors.white),
+                          children: [
+                            TextSpan(text: "iAgreeToThe".tr(context)),
+                            TextSpan(
+                              text: "termsOfUse".tr(context),
+                              style: linkTextStyle,
+                            ),
+                            TextSpan(text: "and".tr(context)),
+                            TextSpan(
+                                text: "privacyPolicy".tr(context),
+                                style: linkTextStyle,
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    print("Privacy policy");
+                                  }),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 FractionallySizedBox(
                   widthFactor: 1,
                   child: SElevatedButton(
-                    onPressed: _canSubmit ? () {} : null,
+                    onPressed: _canSubmit
+                        ? () {
+                            NavUtils.scaleTo(context, const HomeScreen());
+                          }
+                        : null,
                     child: Text(
                       "login".tr(context),
                     ),

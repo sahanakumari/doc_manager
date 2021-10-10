@@ -2,7 +2,7 @@ class LoginException with Exception {
   final dynamic clause;
   final bool forbidden;
 
-  LoginException([this.clause = "Login required!", this.forbidden = false]);
+  LoginException([this.clause = "loginRequired", this.forbidden = false]);
 
   String get errorMessage {
     try {
@@ -16,7 +16,5 @@ class LoginException with Exception {
   }
 
   @override
-  String toString() {
-    return this.clause ?? "$this";
-  }
+  String toString() => clause ?? "$this";
 }
