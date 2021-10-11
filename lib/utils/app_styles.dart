@@ -31,7 +31,7 @@ const Color kButtonColorDark = Color(0xff1BB792);
 const Color kHintColorDark = Color(0xffdedede);
 const Color kDividerColorDark = Color(0x55bcbcbc);
 const Color kErrorColorDark = Color(0xffcd0909);
-Color kBackgroundColorDark = kSwatch[800]!;
+Color kBackgroundColorDark = kSwatch;
 
 class AppTheme {
   final AppSettings settings;
@@ -59,7 +59,7 @@ class AppTheme {
         subtitle1: TextStyle(
           color: kSwatch,
           fontSize: 18 * settings.textScale,
-          fontWeight: FontWeight.normal,
+          fontWeight: FontWeight.bold,
           fontFamily: settings.fontName,
         ),
         subtitle2: TextStyle(
@@ -137,7 +137,7 @@ class AppTheme {
         subtitle1: TextStyle(
           color: Colors.white,
           fontSize: 18.0 * settings.textScale,
-          fontWeight: FontWeight.w900,
+          fontWeight: FontWeight.bold,
           fontFamily: settings.fontName,
         ),
         subtitle2: TextStyle(
@@ -335,7 +335,7 @@ class AppTheme {
           secondary: Color(settings.color),
           secondaryVariant: Color(settings.color),
           surface: kSwatch,
-          background: kSwatch[900]!,
+          background: kSwatch,
           error: kErrorColor,
           onPrimary: Colors.white,
           onSecondary: Colors.white,
@@ -379,7 +379,7 @@ class AppTheme {
         cardColor: kSwatch,
         hintColor: Colors.white38,
         disabledColor: kSwatch[200],
-        backgroundColor: kSwatch[900],
+        backgroundColor: kSwatch,
         brightness: Brightness.dark,
         primaryColorBrightness: Brightness.dark,
         scaffoldBackgroundColor: kBackgroundColorDark,

@@ -25,36 +25,50 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget get _page {
-    return _drawerItems[_index]["p"] ?? const Text("Fragment not available");
+    return _drawerItems[_index]["p"] ??
+        Center(
+          child: Text(_drawerItems[_index]["t"] ?? ""),
+        );
   }
 
   @override
   Widget build(BuildContext context) {
-    return InnerDrawer(
-      key: _innerDrawerKey,
-      onTapClose: true,
-      swipe: true,
-      boxShadow: [],
-      colorTransitionScaffold: Colors.black12,
-      offset: const IDOffset.only(bottom: 0.05),
-      swipeChild: true,
-      backgroundDecoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-      ),
-      borderRadius: AppTheme.kRadius,
-      leftAnimationType: InnerDrawerAnimation.quadratic,
-      leftChild: _buildDrawer(context),
-      scaffold: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: _toggle,
-            icon: Icon(Remix.menu_4_fill),
-          ),
-          title: Text(
-            "appName".tr(context),
-          ),
+    return WillPopScope(
+      onWillPop: () {
+        if (_index != 0) {
+          setState(() {
+            _index = 0;
+          });
+          return Future.value(false);
+        }
+        return Future.value(true);
+      },
+      child: InnerDrawer(
+        key: _innerDrawerKey,
+        onTapClose: true,
+        swipe: true,
+        boxShadow: [],
+        colorTransitionScaffold: Colors.black12,
+        offset: const IDOffset.only(bottom: 0.05),
+        swipeChild: true,
+        backgroundDecoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
         ),
-        body: _page,
+        borderRadius: AppTheme.kRadius,
+        leftAnimationType: InnerDrawerAnimation.quadratic,
+        leftChild: _buildDrawer(context),
+        scaffold: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: _toggle,
+              icon: Icon(Remix.menu_4_fill),
+            ),
+            title: Text(
+              "appName".tr(context),
+            ),
+          ),
+          body: _page,
+        ),
       ),
     );
   }

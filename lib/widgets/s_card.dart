@@ -12,12 +12,9 @@ class SCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: margin ?? EdgeInsets.zero,
+      margin: margin ?? EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: color ??
-            (Theme.of(context).brightness == Brightness.dark
-                ? Theme.of(context).canvasColor
-                : Theme.of(context).canvasColor.withOpacity(0.8)),
+        color: color ?? Theme.of(context).canvasColor,
         boxShadow: [
           BoxShadow(
               color: Theme.of(context).dividerColor.withOpacity(0.3),
@@ -25,6 +22,7 @@ class SCard extends StatelessWidget {
         ],
         borderRadius: BorderRadius.circular(AppTheme.kRadius),
       ),
+      clipBehavior: Clip.hardEdge,
       child: Material(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(AppTheme.kRadius),

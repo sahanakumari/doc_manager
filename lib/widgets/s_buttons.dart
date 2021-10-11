@@ -22,16 +22,20 @@ class STextButton extends StatelessWidget {
 
 class SElevatedButton extends StatelessWidget {
   final Widget child;
+  final bool isSecondary;
   final VoidCallback? onPressed;
 
-  const SElevatedButton({Key? key, required this.child, this.onPressed})
+  const SElevatedButton(
+      {Key? key, required this.child, this.onPressed, this.isSecondary = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Theme.of(context).buttonTheme.colorScheme!.primary,
+        primary: isSecondary
+            ? Theme.of(context).hintColor
+            : Theme.of(context).buttonTheme.colorScheme!.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppTheme.kRadius),
         ),
