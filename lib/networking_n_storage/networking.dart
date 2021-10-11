@@ -60,7 +60,6 @@ class Networking {
 
   static Future<NetworkResponse> get(
     String endpoint, {
-    bool authenticate = true,
     Map<String, String>? queryParams,
     Map<String, dynamic>? headers,
     String contentType = "application/json",
@@ -71,7 +70,6 @@ class Networking {
     bool forceRefresh = false,
   }) async {
     try {
-      if (authenticate && !Session.isLoggedIn) throw LoginException();
       var _dio = Dio(
         BaseOptions(baseUrl: baseUrl ?? AppConfig.kBaseUrl, headers: headers),
       );

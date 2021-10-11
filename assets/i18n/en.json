@@ -14,10 +14,14 @@
   "mobileNumber": "Mobile number",
   "enterMobileDesc": "We will send you an SMS with the verification code to this number",
   "sendOtp": "Send OTP",
+  "sendingOtp": "Sending OTP...",
   "login": "Login",
+  "loggingIn": "Logging in...",
   "//": "OTP",
   "enterVerificationCode": "Enter verification code",
-  "enterVerificationCodeDesc": "Please enter the verification code that was sent to {mobile}",
+  "enterVerificationCodeDesc": "Please enter the verification code that was sent to {mobile}.",
+  "resend": "Re-send",
+  "resendIn": "Re-send in {min}s",
   "iAgreeToThe": "I agree to the ",
   "termsOfUse": "Terms of Use",
   "and": " and ",
@@ -68,5 +72,8 @@
   "enterHeight": "in cm",
   "weight": "Weight",
   "enterWeight": "in kg",
-  "unknownExt": "<unknown>"
+  "unknownExt": "<unknown>",
+  "firstNameRequired": "First name is required!",
+  "mobileNumberRequired": "Mobile number is required!",
+  "invalidNumberValue": "Value cannot be text!"
 }

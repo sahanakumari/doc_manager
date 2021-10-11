@@ -14,10 +14,14 @@
   "mobileNumber": "मोबाइल नंबर",
   "enterMobileDesc": "हम आपको इस नंबर पर सत्यापन कोड के साथ एक एसएमएस भेजेंगे",
   "sendOtp": "OTP भेजें",
+  "sendingOtp": "ओटीपी भेजा जा रहा है...",
   "login": "लॉग इन करें",
+  "loggingIn": "प्रवेश किया...",
   "//": "OTP",
   "enterVerificationCode": "सत्यापन कोड दर्ज करें",
   "enterVerificationCodeDesc": "कृपया सत्यापन कोड दर्ज करें जो कि {mobile} पर भेजा गया था",
+  "resend": "पुन: भेजें",
+  "resendIn": "{min}से. में फिर से भेजें",
   "iAgreeToThe": "मैं इसके लिए सहमत हूँ ",
   "termsOfUse": "उपयोग की शर्तें",
   "and": " तथा ",
@@ -68,5 +72,8 @@
   "enterHeight": "सेमी. में",
   "weight": "वज़न",
   "enterWeight": "किलो. में",
-  "unknownExt": "<अज्ञात>"
+  "unknownExt": "<अज्ञात>",
+  "firstNameRequired": "पहला नाम आवश्यक है!",
+  "mobileNumberRequired": "मोबाइल नंबर आवश्यक है!",
+  "invalidNumberValue": "मान टेक्स्ट नहीं हो सकता!"
 }

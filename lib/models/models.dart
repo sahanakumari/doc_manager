@@ -14,6 +14,18 @@ class Country {
   final String extension;
 
   Country({required this.name, this.alpha2Code, required this.extension});
+
+  @override
+  String toString() => "$name ($extension)";
+
+  @override
+  bool operator ==(dynamic other) => extension == other.extension;
+
+  @override
+  int get hashCode => super.hashCode;
+
+  static Country india = Country(name: "India", extension: "+91");
+  static Country nepal = Country(name: "Nepal", extension: "+977");
 }
 
 class Doctor {
@@ -168,6 +180,7 @@ class Doctor {
       }
       return const Center(child: Icon(Remix.user_3_fill, size: 40));
     }
+
     if (profilePic!.startsWith("https://") ||
         profilePic!.startsWith("http://")) {
       return CachedNetworkImage(
@@ -187,6 +200,7 @@ class Doctor {
         ),
       );
     }
+
     return Image.file(
       File(profilePic!),
       width: double.maxFinite,

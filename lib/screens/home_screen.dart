@@ -3,6 +3,7 @@ import 'package:doc_manager/screens/settings_screen.dart';
 import 'package:doc_manager/utils/app_styles.dart';
 import 'package:doc_manager/utils/extensions.dart';
 import 'package:doc_manager/widgets/s_drawer_item.dart';
+import 'package:doc_manager/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'package:remixicon/remixicon.dart';
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: AppBar(
             leading: IconButton(
               onPressed: _toggle,
-              icon: Icon(Remix.menu_4_fill),
+              icon: const Icon(Remix.menu_4_fill),
             ),
             title: Text(
               "appName".tr(context),
@@ -86,12 +87,11 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(10.0),
-                child: Icon(
-                  Remix.stethoscope_fill,
-                  size: 96,
-                  color: Colors.white70,
+                child: AppIcon(
+                  backgroundColor: Colors.white70,
+                  foregroundColor: Theme.of(context).primaryColor,
                 ),
               ),
               const Divider(),

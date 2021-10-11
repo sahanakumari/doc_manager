@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:doc_manager/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -24,6 +25,7 @@ class DataUtils {
     "O-ve",
   ];
   static const List<String> genders = ["male", "female"];
+  static List<Country> countries = [Country.india, Country.nepal];
 }
 
 class DateTimeUtils {

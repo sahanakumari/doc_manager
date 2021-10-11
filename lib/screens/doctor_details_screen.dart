@@ -3,6 +3,7 @@ import 'package:doc_manager/networking_n_storage/db_helper.dart';
 import 'package:doc_manager/providers/doc_provider.dart';
 import 'package:doc_manager/utils/app_styles.dart';
 import 'package:doc_manager/utils/extensions.dart';
+import 'package:doc_manager/utils/nav_utils.dart';
 import 'package:doc_manager/utils/utils.dart';
 import 'package:doc_manager/widgets/s_buttons.dart';
 import 'package:doc_manager/widgets/s_card.dart';
@@ -54,6 +55,20 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _firstNameCtrl.dispose();
+    _lastNameCtrl.dispose();
+    _dobCtrl.dispose();
+    _mobileCtrl.dispose();
+    _genderCtrl.dispose();
+    _heightCtrl.dispose();
+    _weightCtrl.dispose();
+    _bloodGroupCtrl.dispose();
+    super.dispose();
+  }
+
   final TextEditingController _firstNameCtrl = TextEditingController();
   final TextEditingController _lastNameCtrl = TextEditingController();
   final TextEditingController _dobCtrl = TextEditingController();
@@ -62,6 +77,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
   final TextEditingController _heightCtrl = TextEditingController();
   final TextEditingController _weightCtrl = TextEditingController();
   final TextEditingController _bloodGroupCtrl = TextEditingController();
+  final _key = GlobalKey<ScaffoldMessengerState>();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -77,17 +93,20 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
         var _avatarSize = width / 2.5;
         var _linearFactor = 0.5;
         if (width >= 400) _linearFactor = 0.33;
-        return Scaffold(
-          body: NestedScrollView(
-            controller: _scrollController,
-            body: _buildBody(context, provider, _linearFactor),
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return [_buildAppBar(context, provider, _avatarSize)];
-            },
+        return ScaffoldMessenger(
+          key: _key,
+          child: Scaffold(
+            body: NestedScrollView(
+              controller: _scrollController,
+              body: _buildBody(context, provider, _linearFactor),
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return [_buildAppBar(context, provider, _avatarSize)];
+              },
+            ),
+            bottomNavigationBar:
+                _isEditMode ? _buildBottomButtons(context, provider) : null,
           ),
-          bottomNavigationBar:
-              _isEditMode ? _buildBottomButtons(context, provider) : null,
         );
       }),
     );
@@ -392,6 +411,16 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                     controller: _heightCtrl,
                     enabled: _isEditMode,
                     suffixIcon: const Icon(Remix.ruler_line),
+                    validator: (v) {
+                      if (v?.isNotEmpty ?? false) {
+                        try {
+                          if (v != null) double.parse(v);
+                        } catch (e) {
+                          return "invalidNumberValue".tr(context);
+                        }
+                      }
+                      return null;
+                    },
                   ),
                 ),
                 FractionallySizedBox(
@@ -401,6 +430,16 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                     label: "weight".tr(context),
                     controller: _weightCtrl,
                     enabled: _isEditMode,
+                    validator: (v) {
+                      if (v?.isNotEmpty ?? false) {
+                        try {
+                          if (v != null) double.parse(v);
+                        } catch (e) {
+                          return "invalidNumberValue".tr(context);
+                        }
+                      }
+                      return null;
+                    },
                     suffixIcon: const Icon(Remix.scales_3_line),
                   ),
                 ),
@@ -413,6 +452,9 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
   }
 
   _saveToDb(DocProvider provider) {
+    if (!(_formKey.currentState?.validate() ?? false)) {
+      return;
+    }
     provider
         .saveToLocalDb(
       _doctor.copyWith(
@@ -434,9 +476,20 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
         });
         _updated = true;
         _fillDetails(_doctor);
+        NavUtils.showSnackBar(
+          "detailsUpdated",
+          context: context,
+          key: _key,
+          color: Colors.green,
+          icon: Remix.check_fill,
+        );
       }
     }).catchError((err) {
-      print(err);
+      NavUtils.showSnackBar(
+        "failedToUpdated",
+        context: context,
+        key: _key,
+      );
     });
   }
 
