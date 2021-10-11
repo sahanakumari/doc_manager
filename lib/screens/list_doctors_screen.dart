@@ -1,5 +1,4 @@
 import 'package:doc_manager/models/models.dart';
-import 'package:doc_manager/models/networking.dart';
 import 'package:doc_manager/providers/doc_provider.dart';
 import 'package:doc_manager/screens/doctor_details_screen.dart';
 import 'package:doc_manager/utils/extensions.dart';
@@ -44,10 +43,7 @@ class _ListDoctorsScreenState extends State<ListDoctorsScreen> {
       if (provider.error != null) {
         return ErrorContainer(
           title: "${provider.error}",
-          subtitle: (provider.error is ErrorResponse)
-              ? "${provider.error?.errorMessage}"
-              : "${provider.error}",
-          buttonText: "Re-load",
+          subtitle: "${provider.error}",
           buttonIcon: Remix.error_warning_fill,
           onRetryTap: () {
             provider.getDocs();
@@ -61,8 +57,8 @@ class _ListDoctorsScreenState extends State<ListDoctorsScreen> {
             Remix.emotion_normal_line,
             size: 64,
           ),
-          title: "itsLonely".tr(context),
-          subtitle: "noDoctors".tr(context),
+          title: "itsLonely",
+          subtitle: "noDoctors",
         );
       }
 
@@ -135,7 +131,7 @@ class _ListDoctorsScreenState extends State<ListDoctorsScreen> {
       key: const ValueKey("grid-view"),
       itemCount: items.length,
       physics: const BouncingScrollPhysics(),
-      itemBuilder: (BuildContext context, int index) => DoctorListTile(
+      itemBuilder: (BuildContext context, int index) => DoctorGridTile(
         heroTag: "gv-$index",
         item: items[index],
         onTap: () => _onItemTap(items[index], "gv-$index"),

@@ -1,7 +1,11 @@
+import 'package:doc_manager/networking_n_storage/session.dart';
+import 'package:doc_manager/screens/account_dialog.dart';
 import 'package:doc_manager/screens/list_doctors_screen.dart';
+import 'package:doc_manager/screens/login_screen.dart';
 import 'package:doc_manager/screens/settings_screen.dart';
 import 'package:doc_manager/utils/app_styles.dart';
 import 'package:doc_manager/utils/extensions.dart';
+import 'package:doc_manager/utils/nav_utils.dart';
 import 'package:doc_manager/widgets/s_drawer_item.dart';
 import 'package:doc_manager/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +32,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget get _page {
     return _drawerItems[_index]["p"] ??
         Center(
-          child: Text(_drawerItems[_index]["t"] ?? ""),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AppIcon(),
+              Text(
+                "appName".tr(context),
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ],
+          ),
         );
   }
 
@@ -64,9 +77,27 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: _toggle,
               icon: const Icon(Remix.menu_4_fill),
             ),
-            title: Text(
-              "appName".tr(context),
-            ),
+            title: Text("appName".tr(context)),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  NavUtils.animateTo(context, const AccountDialog())
+                      .then((value) {
+                    if (value ?? false) {
+                      Session.sessionUser = null;
+                      NavUtils.scaleTo(context, const LoginScreen(), true);
+                    }
+                  });
+                },
+                icon: CircleAvatar(
+                  child: const Icon(
+                    Remix.user_3_fill,
+                    size: 18,
+                  ),
+                  foregroundColor: Theme.of(context).primaryColor,
+                ),
+              ),
+            ],
           ),
           body: _page,
         ),

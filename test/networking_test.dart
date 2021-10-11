@@ -19,7 +19,7 @@ class NetworkingTest {
 }
 
 void main() {
-  test('Provider should fetch data and add to the list', () async {
+  test('Provided should fetch data and add to the list', () async {
     final provider = NetworkingTest();
     var items = await provider.getDoctors();
     print(items);

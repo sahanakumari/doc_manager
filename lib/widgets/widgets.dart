@@ -21,24 +21,27 @@ class AppIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: size ?? 96,
-      height: size ?? 96,
-      child: Stack(
-        children: [
-          Icon(
-            Remix.heart_fill,
-            size: size ?? 96,
-            color: backgroundColor ?? Theme.of(context).primaryColor,
-          ),
-          Center(
-            child: Icon(
-              Remix.stethoscope_fill,
-              size: size == null ? 32 : size! / 3,
-              color: foregroundColor ?? Colors.white70,
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: SizedBox(
+        width: size ?? 96,
+        height: size ?? 96,
+        child: Stack(
+          children: [
+            Icon(
+              Remix.heart_fill,
+              size: size ?? 96,
+              color: backgroundColor ?? Theme.of(context).primaryColor,
             ),
-          ),
-        ],
+            Center(
+              child: Icon(
+                Remix.stethoscope_fill,
+                size: size == null ? 32 : size! / 3,
+                color: foregroundColor ?? Colors.white70,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -75,7 +78,7 @@ class ErrorContainer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
             child: Text(
-              title ?? "somethingNotRight".toUpperCase(),
+              title?.tr(context) ?? "somethingWrong".tr(context),
               textScaleFactor: 1.5,
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -91,7 +94,7 @@ class ErrorContainer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
             child: Text(
-              subtitle ?? "pleaseTryReload",
+              subtitle?.tr(context) ?? "pleaseTryReload".tr(context),
               textAlign: TextAlign.center,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,

@@ -199,6 +199,10 @@ class _LoginScreenState extends State<LoginScreen> {
   _buildInputScreen(BuildContext context) {
     return Column(
       children: [
+        AppIcon(
+          foregroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Colors.white30,
+        ),
         Text(
           "enterMobile".tr(context).toUpperCase(),
           style: Theme.of(context)
@@ -326,6 +330,10 @@ class _LoginScreenState extends State<LoginScreen> {
         .copyWith(color: Theme.of(context).hintColor);
     return Column(
       children: [
+        AppIcon(
+          foregroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Colors.white30,
+        ),
         Text(
           "enterVerificationCode".tr(context).toUpperCase(),
           style: Theme.of(context)

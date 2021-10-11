@@ -100,7 +100,8 @@ class Networking {
     } on LoginException {
       rethrow;
     } catch (e) {
-      throw ErrorResponse(null, "$e");
+      if (e is SocketException) throw ErrorResponse(null, "noInternet");
+      throw ErrorResponse(null, "somethingWrong");
     }
   }
 }

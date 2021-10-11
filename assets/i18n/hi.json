@@ -75,5 +75,21 @@
   "unknownExt": "<अज्ञात>",
   "firstNameRequired": "पहला नाम आवश्यक है!",
   "mobileNumberRequired": "मोबाइल नंबर आवश्यक है!",
-  "invalidNumberValue": "मान टेक्स्ट नहीं हो सकता!"
+  "invalidNumberValue": "मान टेक्स्ट नहीं हो सकता!",
+  "//": "Account",
+  "hiUser": "नमस्ते, उपयोगकर्ता!",
+  "logout": "लॉग आउट",
+  "logoutQ": "लॉग आउट?",
+  "logoutDesc": "क्या आप वाकई लॉगआउट करना चाहते हैं?",
+  "yes": "हां",
+  "no": "नहीं",
+  "//": "Error",
+  "itsLonely": "यहाँ अकेला है!",
+  "noDoctors": "दिखाने के लिए डॉक्टर नहीं हैं।",
+  "pleaseTryReload": "कृपया पुनः लोड करने का प्रयास करें।",
+  "somethingWrong": "कुछ गलत हो गया!",
+  "tryAgain": "पुनः प्रयास करें",
+  "unknownError": "सर्वर से अज्ञात त्रुटि!",
+  "sessionExpired": "सत्र समाप्त हुआ!",
+  "noInternet": "इंटरनेट कनेक्शन विफल!"
 }

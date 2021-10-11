@@ -75,5 +75,21 @@
   "unknownExt": "<unknown>",
   "firstNameRequired": "First name is required!",
   "mobileNumberRequired": "Mobile number is required!",
-  "invalidNumberValue": "Value cannot be text!"
+  "invalidNumberValue": "Value cannot be text!",
+  "//": "Account",
+  "hiUser": "Hi, User!",
+  "logout": "Logout",
+  "logoutQ": "Logout?",
+  "logoutDesc": "Do you really want to logout?",
+  "yes": "Yes",
+  "no": "No",
+  "//": "Error",
+  "itsLonely": "It's lonely in here!",
+  "noDoctors": "No doctors to show.",
+  "pleaseTryReload": "Please try reloading.",
+  "somethingWrong": "Something went wrong!",
+  "tryAgain": "Try again",
+  "unknownError": "Unknown error from the server!",
+  "sessionExpired": "Session expired!",
+  "noInternet": "Internet connection failed!"
 }
