@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
 
   provider: ^6.0.1
+  intl: ^0.17.0
   shared_preferences: ^2.0.8
   remixicon: ^1.0.0
   pinput: ^1.2.1
@@ -20,6 +21,9 @@ dependencies:
   dio_http_cache: ^0.3.0
   flutter_inner_drawer: ^0.5.8
   cached_network_image: ^3.1.0
+  sqflite: ^2.0.0+4
+  image_picker: ^0.8.4+2
+
 
 dev_dependencies:
   flutter_test:

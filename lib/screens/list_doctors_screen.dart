@@ -273,7 +273,7 @@ class _ListDoctorsScreenState extends State<ListDoctorsScreen> {
       itemCount: top3.length,
       controller: _pageController,
       itemBuilder: (BuildContext context, int index) {
-        var color = Utils.randomColor;
+        var color = ColorUtils.randomColor;
         return SCard(
           margin: const EdgeInsets.all(5),
           child: InkWell(
@@ -357,6 +357,11 @@ class _ListDoctorsScreenState extends State<ListDoctorsScreen> {
   }
 
   _onItemTap(Doctor item, String tag) {
-    NavUtils.animateTo(context, DoctorDetailsScreen(doctor: item, tag: tag));
+    NavUtils.animateTo(context, DoctorDetailsScreen(doctor: item, tag: tag))
+        .then((value) {
+      if (value == true) {
+        _provider.syncData();
+      }
+    });
   }
 }

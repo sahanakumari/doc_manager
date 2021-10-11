@@ -1,28 +1,57 @@
 import 'package:doc_manager/models/models.dart';
-import 'package:doc_manager/session_n_networking/networking.dart';
+import 'package:doc_manager/networking_n_storage/db_helper.dart';
+import 'package:doc_manager/networking_n_storage/networking.dart';
 import 'package:flutter/material.dart';
 
 class DocProvider with ChangeNotifier {
   bool isGridView = false;
+  bool isSaving = false;
 
   bool isLoading = false;
   dynamic error;
   List<Doctor> doctors = <Doctor>[];
-  List<Doctor> top3Doctors = <Doctor>[];
 
   toggleView() {
     isGridView = !isGridView;
     notifyListeners();
   }
 
-  _findTopRatedDocs(List<Doctor> items) {
+  List<Doctor> get top3Doctors {
     var ordered = <Doctor>[];
-    ordered.addAll(items);
+    ordered.addAll(doctors);
     ordered.sort((a, b) => b.ratingNum.compareTo(a.ratingNum));
     if (ordered.length > 3) ordered = ordered.take(3).toList();
-    top3Doctors.clear();
-    top3Doctors.addAll(ordered);
+    return ordered;
+  }
+
+  updatePic(Doctor doctor, String path) {
+    doctor.profilePic = path;
+    DbHelper().addOrUpdateDoctor(doctor.copyWith(profilePic: path));
     notifyListeners();
+  }
+
+  Future<Doctor?> saveToLocalDb(Doctor doctor) async {
+    var doc = await DbHelper().addOrUpdateDoctor(doctor);
+    notifyListeners();
+    return doc;
+  }
+
+  syncData() {
+    var copy = [];
+    copy.addAll(doctors);
+    DbHelper().getDoctors().then((value) {
+      doctors.clear();
+      for (var e in copy) {
+        var doc = e;
+        for (var element in value) {
+          if (e == element) {
+            doc = element;
+          }
+        }
+        doctors.add(doc);
+      }
+      notifyListeners();
+    });
   }
 
   Future<void> getDocs() async {
@@ -35,9 +64,7 @@ class DocProvider with ChangeNotifier {
                 [];
         doctors.clear();
         doctors.addAll(items);
-        Future.delayed(Duration(milliseconds: 500), () {
-          _findTopRatedDocs(items);
-        });
+        syncData();
       }
       isLoading = false;
       notifyListeners();

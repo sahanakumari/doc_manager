@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:doc_manager/models/networking.dart';
-import 'package:doc_manager/session_n_networking/session.dart';
+import 'package:doc_manager/networking_n_storage/session.dart';
 import 'package:doc_manager/utils/app_config.dart';
 import 'package:doc_manager/utils/exceptions.dart';
 

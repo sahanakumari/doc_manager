@@ -1,5 +1,5 @@
+import 'package:doc_manager/networking_n_storage/session.dart';
 import 'package:doc_manager/providers/app_settings.dart';
-import 'package:doc_manager/session_n_networking/session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

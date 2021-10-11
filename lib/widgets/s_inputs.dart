@@ -7,6 +7,7 @@ class SFormInput extends StatelessWidget {
   final String? label;
   final String? hint;
   final Widget? suffixIcon;
+  final String? Function(String? value)? validator;
 
   const SFormInput(
       {Key? key,
@@ -15,7 +16,8 @@ class SFormInput extends StatelessWidget {
       this.label,
       this.hint,
       this.suffixIcon,
-      this.forcedBorder = false})
+      this.forcedBorder = false,
+      this.validator})
       : super(key: key);
 
   @override
@@ -25,11 +27,15 @@ class SFormInput extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         enabled: enabled,
+        validator: validator,
         decoration: InputDecoration(
           hintText: hint,
           labelText: label,
-          suffixIcon: suffixIcon,
-          suffixIconConstraints: const BoxConstraints(maxWidth: 24),
+          prefixIcon: Align(alignment: Alignment.centerLeft, child: suffixIcon),
+          errorStyle: TextStyle(
+            color: Theme.of(context).errorColor,
+          ),
+          prefixIconConstraints: const BoxConstraints(maxWidth: 32),
           disabledBorder: (forcedBorder ?? false) ? null : InputBorder.none,
         ),
       ),
@@ -45,6 +51,7 @@ class SFormSelect extends StatelessWidget {
   final String? hint;
   final Widget? suffixIcon;
   final void Function(dynamic value)? onChanged;
+  final String? Function(dynamic value)? validator;
 
   const SFormSelect(
       {Key? key,
@@ -54,7 +61,8 @@ class SFormSelect extends StatelessWidget {
       this.suffixIcon,
       required this.items,
       this.value,
-      this.onChanged})
+      this.onChanged,
+      this.validator})
       : super(key: key);
 
   @override
@@ -64,6 +72,7 @@ class SFormSelect extends StatelessWidget {
       child: DropdownButtonFormField(
         icon: suffixIcon,
         value: value,
+        validator: validator,
         onChanged: (enabled ?? true) ? onChanged : null,
         isExpanded: true,
         hint: Text(hint ?? "selectOption"),
