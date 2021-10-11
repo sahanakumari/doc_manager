@@ -79,7 +79,7 @@ class Session {
     }
   }
 
-  static get isLoggedIn => sessionUser == null;
+  static get isLoggedIn => sessionUser != null;
 
   static SessionUser? get sessionUser {
     var mobile = _pref.getString(loginMobile);
