@@ -99,6 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       },
       verificationFailed: (FirebaseAuthException e) {
+        print(e.message);
+        print(e.message);
         _showMessage(e.message ?? "somethingWrong".tr(context));
         setState(() {
           _processing = false;
